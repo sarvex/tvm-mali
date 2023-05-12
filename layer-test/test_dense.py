@@ -25,13 +25,13 @@ def tvm_callback_opencl_postproc(code):
 
 
 def convert_to_remote(func, remote):
-    temp = util.tempdir() 
-    prefix = str(np.random.randint(1 << 31)) + "_"
-    path_dso = temp.relpath(prefix + "tmp_func.tar")
+    temp = util.tempdir()
+    prefix = f"{str(np.random.randint(1 << 31))}_"
+    path_dso = temp.relpath(f"{prefix}tmp_func.tar")
     func.export_library(path_dso)
 
     remote.upload(path_dso)
-    func = remote.load_module(prefix + "tmp_func.tar")
+    func = remote.load_module(f"{prefix}tmp_func.tar")
     return func
 
 
@@ -112,7 +112,6 @@ def tune_dense(batch, hidden, out, ctx,
     try:
         np.testing.assert_allclose(np.dot(a_np, b_np.T) + bias_np, c.asnumpy(), rtol=1e-2)
     except Exception as e:
-        pass
         print(e)
 
     return best_cost, 2.0 * np.prod(b.shape) / (1e9) / best_cost, best_config
@@ -152,7 +151,6 @@ def verify_dense(batch, hidden, out, ctx,
     try:
         np.testing.assert_allclose(np.dot(a_np, b_np.T) + bias_np, c.asnumpy(), rtol=1e-1)
     except Exception as e:
-        pass
         print(e)
 
     return cost, 2.0 * np.prod(b.shape) / (1e9) / cost

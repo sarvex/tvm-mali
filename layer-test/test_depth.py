@@ -10,13 +10,13 @@ from tvm.contrib.pickle_memoize import memoize
 dtype = 'float32'
 
 def convert_to_remote(func, remote):
-    temp = util.tempdir() 
-    prefix = str(np.random.randint(1 << 31)) + "_"
-    path_dso = temp.relpath(prefix + "tmp_func.tar")
+    temp = util.tempdir()
+    prefix = f"{str(np.random.randint(1 << 31))}_"
+    path_dso = temp.relpath(f"{prefix}tmp_func.tar")
     func.export_library(path_dso)
 
     remote.upload(path_dso)
-    func = remote.load_module(prefix + "tmp_func.tar")
+    func = remote.load_module(f"{prefix}tmp_func.tar")
     return func
 
 

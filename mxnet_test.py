@@ -22,7 +22,7 @@ def test_module(model, dtype):
     elif model == 'resnet18':
         model_block = mx.gluon.model_zoo.vision.get_resnet(version=1, num_layers=18, pretrained=False)
     else:
-        raise RuntimeError("invalid model model " + model)
+        raise RuntimeError(f"invalid model model {model}")
     model_block.collect_params().initialize(mx.init.Xavier())
 
     # define input and test function

@@ -25,7 +25,7 @@ def run_case(model, dtype):
         net, params = nnvm.testing.mobilenet.get_workload(
             batch_size=1, image_shape=image_shape, dtype=dtype)
     else:
-        raise ValueError('no benchmark prepared for {}.'.format(model))
+        raise ValueError(f'no benchmark prepared for {model}.')
 
     # compile
     opt_level = 2 if dtype == 'float32' else 1
